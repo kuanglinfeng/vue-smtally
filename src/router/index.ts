@@ -1,26 +1,31 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import Home from '../views/Home.vue'
-import dayjs from 'dayjs'
-
-console.log(dayjs().year())
+import Bill from '@/views/Bill.vue'
+import Add from '@/views/Add.vue'
+import Chart from '@/views/Chart.vue'
 
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    redirect: '/bill'
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/bill',
+    name: 'Bill',
+    component: Bill
+  },
+  {
+    path: '/add',
+    name: 'Add',
+    component: Add
+  },
+  {
+    path: '/chart',
+    name: 'Chart',
+    component: Chart
+  },
 ]
 
 const router = new VueRouter({
