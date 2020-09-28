@@ -8,10 +8,15 @@
 </template>
 
 <script lang="ts">
+import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
 import Nav from '@/components/Nav.vue'
-export default {
-  name: 'Layout',
+
+@Component({
   components: {Nav}
+})
+export default class extends Vue{
+
 }
 </script>
 

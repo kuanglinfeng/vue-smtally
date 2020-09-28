@@ -1,17 +1,40 @@
 <template>
   <div class="wrapper">
-
+    <button
+      v-for="value in values"
+      :key="value"
+      :class="text === value ? 'active' : '' "
+      @click="onSelect"
+    >
+      {{ value }}
+    </button>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import { Prop } from 'vue-property-decorator'
+import { Component, Emit, Prop } from 'vue-property-decorator'
 
-export default class RadioMenu extends Vue{
-  // @Prop({type: String}) defaultValue!: string
-  // @Prop({type: String}) values!: string[]
-  // @Prop({type: String}) defaultValue!: string
+@Component
+export default class extends Vue {
+  @Prop({type: String}) defaultValue!: string
+  @Prop({type: Array}) values!: string[]
+
+  text = ''
+
+  created() {
+    if (this.defaultValue) {
+      this.text = this.defaultValue
+    } else {
+      this.text = this.values[0]
+    }
+  }
+
+  @Emit()
+  onSelect(e: ClickEvent) {
+    this.text = e.target.innerText
+    return e.target.innerText
+  }
 }
 </script>
 

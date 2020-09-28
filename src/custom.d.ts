@@ -17,3 +17,10 @@ type RecordItem = {
 type IconWrapperProps = {
   backgroundColor: string;
 }
+
+type ClickEvent = {
+  target: {
+    value: string;
+    innerText: string;
+  };
+}
