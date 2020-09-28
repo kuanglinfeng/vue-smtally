@@ -27,6 +27,8 @@ export default class extends Vue{
   height: 100vh;
   > main {
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>

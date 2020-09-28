@@ -10,5 +10,9 @@
 
 <style lang="scss">
 @import "~@/styles/global.scss";
+@import "~@/styles/variable.scss";
 
+#app {
+  min-height: $min-height;
+}
 </style>

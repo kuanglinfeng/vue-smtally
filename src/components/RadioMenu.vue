@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="radioMenu-wrapper">
     <button
       v-for="value in values"
       :key="value"
@@ -40,7 +40,7 @@ export default class extends Vue {
 
 <style scoped lang="scss">
 @import "~@/styles/variable.scss";
-.wrapper {
+.radioMenu-wrapper {
   border: 1px solid #fff;
   width: 60%;
   border-radius: 4px;
