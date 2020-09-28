@@ -1,12 +1,14 @@
 <template>
-  <div>
-    Chart页
-  </div>
+  <Layout>
+    chart
+  </Layout>
 </template>
 
 <script lang="ts">
+import Layout from '@/components/Layout.vue'
 export default {
-name: "Chart"
+name: "Chart",
+  components: { Layout }
 }
 </script>
 

@@ -1,12 +1,15 @@
 <template>
-  <div>
+  <Layout>
     Add 页
-  </div>
+  </Layout>
 </template>
 
 <script lang="ts">
+import Layout from '@/components/Layout.vue'
+
 export default {
-  name: 'Add'
+  name: 'Add',
+  components: {Layout}
 }
 </script>
 

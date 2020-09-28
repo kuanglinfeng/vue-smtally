@@ -3,6 +3,7 @@ import VueRouter, { RouteConfig } from 'vue-router'
 import Bill from '@/views/Bill.vue'
 import Add from '@/views/Add.vue'
 import Chart from '@/views/Chart.vue'
+import NotFound from '@/views/NotFound.vue'
 
 Vue.use(VueRouter)
 
@@ -26,6 +27,11 @@ const routes: Array<RouteConfig> = [
     name: 'Chart',
     component: Chart
   },
+  {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound
+  }
 ]
 
 const router = new VueRouter({
