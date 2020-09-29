@@ -23,7 +23,10 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Component, Prop, Watch } from 'vue-property-decorator'
+import { Toast } from 'mint-ui';
 import Icon from '@/components/Icon.vue'
+
+Vue.component(Toast.name, Toast)
 
 @Component({
   components: { Icon }
@@ -66,7 +69,7 @@ export default class extends Vue {
     } else {
       const formatAmount = parseFloat(parseFloat(this.amount).toFixed(2))
       if (formatAmount < 0) {
-        alert('请输入正确的金额哦！')
+        Toast('请输入正确的金额哦！')
       } else {
         // 提交
         this.$emit('submit', formatAmount)
