@@ -3,9 +3,8 @@
     <Header>
       <RadioMenu :values="['支出', '收入']" @on-select="onAmountTypeSelect" />
     </Header>
-    <main>
-    </main>
-    <div class="amountShow">
+      <UserTags :type="amountType" @onSelect="onTagSelect" />
+      <div class="amountShow">
       <DatePicker @on-confirm="onDateConfirm" />
       <Remark @on-remark-change="onRemarkChange" :default-remark="remark" />
       <span class="amount" >{{'￥' + amount}}</span>
@@ -24,20 +23,22 @@ import Keyboard from '@/components/bill/Keyboard.vue'
 import DatePicker from '@/components/DatePicker.vue'
 import dayjs from 'dayjs'
 import Remark from '@/components/Remark.vue'
+import UserTags from '@/components/bill/UserTags.vue'
 
 @Component({
-  components: { Remark, DatePicker, Keyboard, RadioMenu, Layout, Header }
+  components: { UserTags, Remark, DatePicker, Keyboard, RadioMenu, Layout, Header }
 })
 export default class extends Vue {
 
-  amountType = '支出'
+  amountType = '-'
   amount = '0'
   date = dayjs().toDate()
   remark = ''
+  tag!: TagItem
 
   onAmountTypeSelect(value: string) {
     console.log('amountType', value)
-    this.amountType = value
+    this.amountType = value === '支出' ? '-' : '+'
   }
 
   onAmountChange(amount: string) {
@@ -53,6 +54,11 @@ export default class extends Vue {
   onRemarkChange(remark: string) {
     console.log('remark', remark)
     this.remark = remark
+  }
+
+  onTagSelect(tag: TagItem) {
+    console.log('tag', tag.title)
+    this.tag = tag
   }
 
   onSubmit(amount: number) {
