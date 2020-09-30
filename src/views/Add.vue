@@ -3,11 +3,11 @@
     <Header>
       <RadioMenu :values="['支出', '收入']" @on-select="onAmountTypeSelect" />
     </Header>
-      <UserTags :type="amountType" @onSelect="onTagSelect" />
-      <div class="amountShow">
+    <UserTags :type="amountType" @onSelect="onTagSelect" />
+    <div class="amountShow">
       <DatePicker @on-confirm="onDateConfirm" />
       <Remark @on-remark-change="onRemarkChange" :default-remark="remark" />
-      <span class="amount" >{{'￥' + amount}}</span>
+      <span class="amount">{{ '￥' + amount }}</span>
     </div>
     <Keyboard @amountChange="onAmountChange" @submit="onSubmit" />
   </div>
@@ -64,8 +64,6 @@ export default class extends Vue {
   onSubmit(amount: number) {
     console.log('submit', amount)
   }
-
-
 }
 </script>
 
@@ -73,9 +71,10 @@ export default class extends Vue {
 @import "~@/styles/variable.scss";
 
 .add-wrapper {
-  min-height: $min-height;
+  height: $min-height;
   display: flex;
   flex-direction: column;
+  overflow: auto;
   > main {
     flex-grow: 234;
   }

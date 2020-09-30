@@ -39,7 +39,22 @@ export default class extends Vue {
 
   @Watch('type', { immediate: true })
   onTypeChange() {
-    const tags = this.type === '-' ? userOutlayTags : userIncomeTags
+    let tags: TagItem[] = []
+    if (this.type === '-') {
+      this.$store.commit('getUserTags', 'userOutlayTags')
+      if (this.$store.state.userOutlayTags.length === 0) {
+        tags = userOutlayTags
+      } else {
+        tags = this.$store.state.userOutlayTags
+      }
+    } else {
+      this.$store.commit('getUserTags', 'userIncomeTags')
+      if (this.$store.state.userIncomeTags.length === 0) {
+        tags = userIncomeTags
+      } else {
+        tags = this.$store.state.userIncomeTags
+      }
+    }
     // 没有传入默认选中的tag 则默认选中选对应类型tag列表的第一个
     if (!this.defaultTag) {
       this.selectedTagValue = tags[0].value

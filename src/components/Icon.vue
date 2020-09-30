@@ -1,5 +1,5 @@
 <template>
-  <svg class="icon" :class="enhanceClass">
+  <svg class="icon" :class="enhanceClass" @click="click">
     <use :xlink:href="'#'+value"></use>
   </svg>
 </template>
@@ -19,6 +19,10 @@ try {
 export default class Icon extends Vue {
   @Prop(String) value!: string
   @Prop(String) enhanceClass!: string
+
+  click() {
+    this.$emit('click')
+  }
 }
 </script>
 
