@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { Component, Emit, Prop } from 'vue-property-decorator'
+import { Component, Emit, Prop, Watch } from 'vue-property-decorator'
 import { DatetimePicker } from 'mint-ui'
 import dayjs from 'dayjs'
 
@@ -38,6 +38,11 @@ export default class extends Vue {
     if (this.defaultDate) {
       this.date = this.defaultDate
     }
+  }
+
+  @Watch('date')
+  onDateChange() {
+    this.showDate = dayjs(this.date).date()
   }
 
   @Emit()

@@ -22,7 +22,7 @@ export default class extends Vue {
  header  {
   padding: 8px 12px;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   background: $theme-color;
   font-size: 14px;

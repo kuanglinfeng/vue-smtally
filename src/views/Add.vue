@@ -1,7 +1,9 @@
 <template>
   <div class="add-wrapper">
     <Header>
+      <Icon value="back" @click="$router.back()" />
       <RadioMenu :values="['支出', '收入']" @on-select="onAmountTypeSelect" />
+      <span />
     </Header>
     <UserTags :type="amountType" @onSelect="onTagSelect" />
     <div class="amountShow">
@@ -24,45 +26,56 @@ import DatePicker from '@/components/DatePicker.vue'
 import dayjs from 'dayjs'
 import Remark from '@/components/Remark.vue'
 import UserTags from '@/components/bill/UserTags.vue'
-
+import Icon from '@/components/Icon.vue'
 @Component({
-  components: { UserTags, Remark, DatePicker, Keyboard, RadioMenu, Layout, Header }
+  components: {Icon, UserTags, Remark, DatePicker, Keyboard, RadioMenu, Layout, Header }
 })
 export default class extends Vue {
 
-  amountType = '-'
+  amountType: AmountType = '-'
   amount = '0'
   date = dayjs().toDate()
   remark = ''
   tag!: TagItem
 
   onAmountTypeSelect(value: string) {
-    console.log('amountType', value)
     this.amountType = value === '支出' ? '-' : '+'
   }
 
   onAmountChange(amount: string) {
-    console.log('amount', amount)
     this.amount = amount
   }
 
   onDateConfirm(date: Date) {
-    console.log('date', date)
     this.date = date
   }
 
   onRemarkChange(remark: string) {
-    console.log('remark', remark)
     this.remark = remark
   }
 
   onTagSelect(tag: TagItem) {
-    console.log('tag', tag.title)
     this.tag = tag
   }
 
   onSubmit(amount: number) {
-    console.log('submit', amount)
+    const id = this.$route.query.id
+    const record: RecordItem = {
+      type: this.amountType,
+      tag: this.tag,
+      date: this.date,
+      remark: this.remark,
+      amount: amount
+    }
+    if (!id) {
+      this.$store.commit('addRecord', record)
+    } else {
+      this.$store.commit('editRecord', {
+        id,
+        record,
+      })
+    }
+    this.$router.push('/bill')
   }
 }
 </script>

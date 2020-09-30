@@ -141,28 +141,14 @@ div.iconBorder {
   display:flex;
   align-items: center;
   justify-content: center;
-  background: #ECF0EF;
+  background: #fff;
   height: 40px; width: 40px;
   border-radius: 50%;
   margin-bottom: 10px;
-  &.active {
-    background: $theme-color;
-    > .icon {
-      fill: #fff;
-    }
-  }
-  &.define {
-    background: #ECF0EF;
-    border: 1px dashed #AAAAA8;
-    > .icon {
-      fill: #747777;
-    }
-  }
-
   &.selected {
-    background: $theme-color;
+    border: 1px dashed $theme-color;
     .icon {
-      fill: #fff;
+      fill: $theme-color;
     }
   }
 }
