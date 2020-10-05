@@ -45,10 +45,10 @@ export default class extends Vue {
   }
 
   @Emit()
-  confirm(month: number) {
+  confirm(month: string) {
     this.showPicker = false
-    this.currentMonth = month
-    return month
+    this.currentMonth = parseInt(month)
+    return parseInt(month)
   }
 }
 </script>
