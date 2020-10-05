@@ -23,10 +23,10 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Component, Prop, Watch } from 'vue-property-decorator'
-import { Toast } from 'mint-ui';
+import { Toast } from 'vant';
 import Icon from '@/components/Icon.vue'
 
-Vue.component(Toast.name, Toast)
+Vue.use(Toast)
 
 @Component({
   components: { Icon }

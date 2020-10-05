@@ -2,16 +2,34 @@
   <div class="add-wrapper">
     <Header>
       <Icon value="back" @click="$router.back()" />
-      <RadioMenu :values="['支出', '收入']" @on-select="onAmountTypeSelect" />
+      <RadioMenu
+        :default-value="defaultRecord && (defaultRecord.type === '-' ? '支出' : '收入')"
+        :values="['支出', '收入']"
+        @on-select="onAmountTypeSelect"
+      />
       <span />
     </Header>
-    <UserTags :type="amountType" @onSelect="onTagSelect" />
+    <UserTags
+      :default-tag="defaultRecord && defaultRecord.tag"
+      :type="amountType"
+      @onSelect="onTagSelect"
+    />
     <div class="amountShow">
-      <DatePicker @on-confirm="onDateConfirm" />
-      <Remark @on-remark-change="onRemarkChange" :default-remark="remark" />
-      <span class="amount">{{ '￥' + amount }}</span>
+      <DatePicker
+        :default-date=" defaultRecord && translateStrToDate(defaultRecord.date)"
+        @confirm="onDateConfirm"
+      />
+      <Remark
+        :default-remark=" defaultRecord && defaultRecord.remark"
+        @on-remark-change="onRemarkChange"
+      />
+      <span class="amount">{{'￥' + amount }}</span>
     </div>
-    <Keyboard @amountChange="onAmountChange" @submit="onSubmit" />
+    <Keyboard
+      :default-amount="defaultRecord && defaultRecord.amount.toString()"
+      @amountChange="onAmountChange"
+      @submit="onSubmit"
+    />
   </div>
 </template>
 
@@ -19,16 +37,17 @@
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 import Layout from '@/components/Layout.vue'
-import Header from '@/components/bill/Header.vue'
+import Header from '@/components/add/Header.vue'
 import RadioMenu from '@/components/RadioMenu.vue'
-import Keyboard from '@/components/bill/Keyboard.vue'
+import Keyboard from '@/components/add/Keyboard.vue'
 import DatePicker from '@/components/DatePicker.vue'
 import dayjs from 'dayjs'
 import Remark from '@/components/Remark.vue'
-import UserTags from '@/components/bill/UserTags.vue'
+import UserTags from '@/components/add/UserTags.vue'
 import Icon from '@/components/Icon.vue'
+
 @Component({
-  components: {Icon, UserTags, Remark, DatePicker, Keyboard, RadioMenu, Layout, Header }
+  components: { Icon, UserTags, DatePicker, Remark, Keyboard, RadioMenu, Layout, Header }
 })
 export default class extends Vue {
 
@@ -37,6 +56,22 @@ export default class extends Vue {
   date = dayjs().toDate()
   remark = ''
   tag!: TagItem
+
+  defaultRecord = null
+
+  created() {
+    const id = this.$route.query.id
+    if (id) {
+      this.$store.commit('getRecordById', id)
+      this.defaultRecord = this.$store.state.record
+      this.amountType = this.$store.state.record.type
+    }
+  }
+
+  translateStrToDate(str: string | Date) {
+    if (str instanceof  Date) return str
+    return dayjs(str).toDate()
+  }
 
   onAmountTypeSelect(value: string) {
     this.amountType = value === '支出' ? '-' : '+'

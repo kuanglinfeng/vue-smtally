@@ -6,10 +6,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { DatetimePicker, Popup, Picker, ActionSheet } from 'vant'
 
-export default class extends Vue {
+Vue.use(DatetimePicker).use(Popup).use(Picker).use(ActionSheet)
 
-}
+export default {}
 </script>
 
 <style lang="scss">

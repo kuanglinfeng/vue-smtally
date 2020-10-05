@@ -3,59 +3,63 @@
     <div class="calendar" @click="openPicker">
       {{ showDate }}
     </div>
-    <mt-datetime-picker
-      v-model="date"
-      ref="picker"
-      type="date"
-      year-format="{value} 年"
-      month-format="{value} 月"
-      date-format="{value} 日"
-      @confirm="onConfirm"
+    <van-popup
+      v-model="show"
+      position="bottom"
+      get-container="body"
     >
-    </mt-datetime-picker>
+      <van-datetime-picker
+        v-model="currentDate"
+        type="date"
+        title="选择日期"
+        @cancel="cancel"
+        @change="change"
+        @confirm="confirm"
+      />
+    </van-popup>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import { Component, Emit, Prop, Watch } from 'vue-property-decorator'
-import { DatetimePicker } from 'mint-ui'
 import dayjs from 'dayjs'
 
-Vue.component(DatetimePicker.name, DatetimePicker)
-
-@Component({
-  components: {}
-})
+@Component({})
 export default class extends Vue {
 
-  @Prop({type: Date}) defaultDate!: Date
+  @Prop({ type: Date }) defaultDate!: Date
 
-  date = dayjs().toDate()
-  showDate = dayjs(this.date).date()
+  show = false
+
+  currentDate = dayjs().toDate()
+  showDate = dayjs(this.currentDate).date()
 
   created() {
+    this.show = false
     if (this.defaultDate) {
-      this.date = this.defaultDate
+      this.currentDate = this.defaultDate
     }
   }
 
-  @Watch('date')
-  onDateChange() {
-    this.showDate = dayjs(this.date).date()
+  @Watch('currentDate')
+  change() {
+    this.showDate = dayjs(this.currentDate).date()
   }
 
   @Emit()
-  onConfirm(value: Date) {
+  confirm(value: Date) {
+    this.show = false
     return value
   }
 
-  openPicker() {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
-    this.$refs.picker.open();
+  cancel() {
+    this.show = false
   }
 
+  openPicker() {
+    this.show = true
+  }
 }
 </script>
 
@@ -73,7 +77,7 @@ export default class extends Vue {
 
 .calendar {
   position: relative;
-  width: 32px;  height: 32px;
+  width: 32px; height: 32px;
   background: #CDF9EA;
   opacity: 1;
   border-radius: 4px;
@@ -85,7 +89,7 @@ export default class extends Vue {
   &::before {
     position: absolute;
     content: '';
-    display:block;
+    display: block;
     width: 2px; height: 6px;
     background: $theme-color;
     top: -3px; left: 8px;
@@ -93,7 +97,7 @@ export default class extends Vue {
   &::after {
     position: absolute;
     content: '';
-    display:block;
+    display: block;
     width: 2px; height: 6px;
     background: $theme-color;
     top: -3px; right: 8px;

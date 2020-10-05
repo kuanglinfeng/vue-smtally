@@ -38,14 +38,12 @@ html, body {
   height: 100vh;
 }
 
-.picker-toolbar .mint-datetime-action {
+div.van-picker__toolbar > button{
   color: $theme-color;
 }
 
-.mint-msgbox-content .mint-msgbox-input input {
-  height: 34px;
-}
-
-.mint-msgbox-btns > .mint-msgbox-confirm {
-  color: $theme-color;
+div.van-action-sheet {
+  > button.van-action-sheet__item:nth-child(2) {
+    color: red;
+  }
 }

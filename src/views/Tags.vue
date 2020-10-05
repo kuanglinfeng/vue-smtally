@@ -39,7 +39,7 @@
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 import Icon from '@/components/Icon.vue'
-import Header from '@/components/bill/Header.vue'
+import Header from '@/components/add/Header.vue'
 import { systemIncomeTags, systemOutlayTags, SystemTags } from '@/constants/systemTags'
 
 @Component({
@@ -146,7 +146,7 @@ div.iconBorder {
   border-radius: 50%;
   margin-bottom: 10px;
   &.selected {
-    border: 1px dashed $theme-color;
+    border: 1px solid $theme-color;
     .icon {
       fill: $theme-color;
     }
