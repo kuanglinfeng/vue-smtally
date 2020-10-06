@@ -12,7 +12,7 @@
         @click="onIncomeSelect"
         :class="`circle ${ amountType === '+' ? 'active' : '' }`"
       />
-      <span>支出:{{ incomeAmount.toFixed(2) }}</span>
+      <span>收入:{{ incomeAmount.toFixed(2) }}</span>
     </div>
   </div>
 </template>
