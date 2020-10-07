@@ -6,8 +6,12 @@
         class="rankItem"
         v-for="data in getRankData(this.year, this.month, this.amountType)"
         :key="data.tag.value"
+        @click="onRankItemClick(data.tag)"
       >
-        <div class="iconContainer">
+        <div
+          class="iconContainer"
+          :style="{'--tagColor': tagColors[data.tag.value]}"
+        >
           <Icon :value="`${ data.tag.value }`" />
         </div>
         <div class="rankContent">
@@ -33,6 +37,7 @@ import { Component, Prop } from 'vue-property-decorator'
 import Icon from '@/components/Icon.vue'
 import dayjs from 'dayjs'
 import { getTotalAmountOfMonth } from '@/utils/recordsHandler'
+import tagColors from '@/constants/tagColors'
 
 type RankDataItem = {
   tag: TagItem;
@@ -53,6 +58,12 @@ export default class extends Vue {
   @Prop({type: String}) amountType!: AmountType
   @Prop({type: Number}) year!: number
   @Prop({type: Number}) month!: number
+
+  tagColors = tagColors
+
+  onRankItemClick(tag: TagItem) {
+    this.$router.push(`/rankDetail?title=${ tag.title }&value=${ tag.value }&year=${ this.year }&month=${ this.month }&amountType=${ encodeURIComponent(this.amountType) }`)
+  }
 
   getRankData(year: number, month: number, type: AmountType) {
     const data: RankData = {}
@@ -86,8 +97,6 @@ export default class extends Vue {
 </script>
 
 <style scoped lang="scss">
-@import "~@/styles/variable.scss";
-
 div.rank-wrapper {
   padding: 5px 0;
   flex-grow: 234;
@@ -115,22 +124,9 @@ div.iconContainer {
   justify-content: center;
   background: #ECF0EF;
   border-radius: 50%;
-  &.active {
-    background: $theme-color;
-    > .icon {
-      fill: #fff;
-    }
-  }
-  &.define {
-    background: #ECF0EF;
-    border: 1px dashed #AAAAA8;
-    > .icon {
-      fill: #747777;
-    }
-  }
   margin: 0;
   padding: 0;
-  background: $theme-color;
+  background: var(--tagColor);
   width: 30px; height: 30px;
   .icon {
     fill: #fff;

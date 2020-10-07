@@ -65,6 +65,7 @@ export default class extends Vue {
       this.$store.commit('getRecordById', id)
       this.defaultRecord = this.$store.state.record
       this.amountType = this.$store.state.record.type
+      this.date = this.$store.state.record.date
     }
   }
 

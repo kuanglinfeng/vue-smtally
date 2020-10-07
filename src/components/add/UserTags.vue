@@ -10,6 +10,7 @@
         <div
           class="iconWrapper"
           :class="{active: selectedTagValue === tag.value, define: tag.value === 'define'}"
+          :style="{'--tagColor': tagColors[tag.value]}"
         >
           <Icon :value="tag.value" />
         </div>
@@ -25,6 +26,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator'
 import router from '@/router'
 import { userIncomeTags, userOutlayTags } from '@/constants/userDefaultTags'
 import Icon from '@/components/Icon.vue'
+import tagColors from '@/constants/tagColors'
 
 @Component({
   components: { Icon }
@@ -36,6 +38,7 @@ export default class extends Vue {
 
   userTags: TagItem[] = []
   selectedTagValue = ''
+  tagColors = tagColors
 
   @Watch('type', { immediate: true })
   onTypeChange() {
@@ -94,8 +97,6 @@ export default class extends Vue {
 </script>
 
 <style scoped lang="scss">
-@import "~@/styles/variable.scss";
-
 .userTags-wrapper {
   flex-grow: 99;
   box-shadow: 0 0 1px rgba(0, 0, 0, .25);
@@ -132,7 +133,7 @@ div.iconWrapper {
   border-radius: 50%;
   margin-bottom: 10px;
   &.active {
-    background: $theme-color;
+    background: var(--tagColor);
     > .icon {
       fill: #fff;
     }

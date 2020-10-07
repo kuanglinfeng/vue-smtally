@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import weekHash from '@/constants/weekHash'
 
 type PieChartDataItem = {
   name: string;
@@ -10,6 +11,58 @@ export type PieChartData = PieChartDataItem[]
 export type LineChartData = {
   xData: string[];
   yData: number[];
+}
+
+export const mapRecordsByDate = (records: RecordItem[], amountType?: AmountType, tag?: TagItem) => {
+  records.sort((a: RecordItem, b: RecordItem) => {
+    const aTime = new Date(a.date).getTime()
+    const bTime = new Date(b.date).getTime()
+    return bTime - aTime
+  })
+  const map: any = {}
+  if (amountType && tag) {
+    records = records.filter(record => record.type === amountType && record.tag.value === tag.value)
+  }
+  records.forEach(record => {
+    const y = dayjs(record.date).year()
+    const m = dayjs(record.date).month() + 1
+    const d = dayjs(record.date).date()
+    if (!map[`${ y }-${ m }-${ d }`]) {
+      map[`${ y }-${ m }-${ d }`] = [record]
+    } else {
+      map[`${ y }-${ m }-${ d }`].push(record)
+    }
+  })
+  return map
+}
+
+export const filterRecordsByYearAndMonth = (records: RecordItem[], year: number, month: number, amountType?: AmountType, tag?: TagItem): { [key: string]: RecordItem[] } => {
+  const dateMap = mapRecordsByDate(records, amountType, tag)
+  const map: any = {}
+  for (const prop in dateMap) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (dateMap.hasOwnProperty(prop)) {
+      const y = parseInt(prop.split('-')[0])
+      const m = parseInt(prop.split('-')[1])
+      if (year === y && month === m) {
+        map[prop] = dateMap[prop]
+      }
+    }
+  }
+  return map
+}
+
+export const getDayAmount = (records: RecordItem[], amountType: AmountType, year: number, month: number, day: number) => {
+  let total = 0
+  records.forEach((record: RecordItem) => {
+    const y = dayjs(record.date).year()
+    const m = dayjs(record.date).month() + 1
+    const d = dayjs(record.date).date()
+    if (y === year && m === month && d ===  day && record.type === amountType) {
+      total += record.amount
+    }
+  })
+  return total
 }
 
 export const getTotalAmountOfMonth = (records: RecordItem[], year: number, month: number) => {

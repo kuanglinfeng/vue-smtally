@@ -5,6 +5,7 @@ import Add from '@/views/Add.vue'
 import Chart from '@/views/Chart.vue'
 import NotFound from '@/views/NotFound.vue'
 import Tags from '@/views/Tags.vue'
+import RankDetail from '@/views/RankDetail.vue'
 
 Vue.use(VueRouter)
 
@@ -32,6 +33,11 @@ const routes: Array<RouteConfig> = [
     path: '/tags',
     name: 'Tags',
     component: Tags
+  },
+  {
+    path: '/rankDetail',
+    name: 'RankDetail',
+    component: RankDetail
   },
   {
     path: '*',
